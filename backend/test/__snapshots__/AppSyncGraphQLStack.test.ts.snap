@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stack snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "AppSyncApiKey": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "GqlApiDefaultApiKey3A4E3881",
+          "ApiKey",
+        ],
+      },
+    },
+    "AppSyncUrl": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "GqlApi4E487465",
+          "GraphQLUrl",
+        ],
+      },
+    },
+    "ProjectRegion": Object {
+      "Value": Object {
+        "Ref": "AWS::Region",
+      },
+    },
+  },
+  "Resources": Object {
+    "GqlApi4E487465": Object {
+      "Properties": Object {
+        "AuthenticationType": "API_KEY",
+        "Name": "blog-graphql-api",
+      },
+      "Type": "AWS::AppSync::GraphQLApi",
+    },
+    "GqlApiDefaultApiKey3A4E3881": Object {
+      "DependsOn": Array [
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "Expires": 1617268006,
+      },
+      "Type": "AWS::AppSync::ApiKey",
+    },
+    "GqlApiPostResolverCEF0036B": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "LambdaConfig": Object {
+          "LambdaFunctionArn": Object {
+            "Fn::ImportValue": "LambdaResolver:ExportsOutputFnGetAttPostFunction61046647Arn50D23A83",
+          },
+        },
+        "Name": "PostResolver",
+        "ServiceRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "GqlApiPostResolverServiceRoleA926AB19",
+            "Arn",
+          ],
+        },
+        "Type": "AWS_LAMBDA",
+      },
+      "Type": "AWS::AppSync::DataSource",
+    },
+    "GqlApiPostResolverMutationcreatePostResolver78B052AC": Object {
+      "DependsOn": Array [
+        "GqlApiPostResolverCEF0036B",
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "DataSourceName": "PostResolver",
+        "FieldName": "createPost",
+        "Kind": "UNIT",
+        "TypeName": "Mutation",
+      },
+      "Type": "AWS::AppSync::Resolver",
+    },
+    "GqlApiPostResolverMutationdeletePostResolverA00B368C": Object {
+      "DependsOn": Array [
+        "GqlApiPostResolverCEF0036B",
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "DataSourceName": "PostResolver",
+        "FieldName": "deletePost",
+        "Kind": "UNIT",
+        "TypeName": "Mutation",
+      },
+      "Type": "AWS::AppSync::Resolver",
+    },
+    "GqlApiPostResolverMutationupdatePostResolverE032C7A3": Object {
+      "DependsOn": Array [
+        "GqlApiPostResolverCEF0036B",
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "DataSourceName": "PostResolver",
+        "FieldName": "updatePost",
+        "Kind": "UNIT",
+        "TypeName": "Mutation",
+      },
+      "Type": "AWS::AppSync::Resolver",
+    },
+    "GqlApiPostResolverQueryallPostsResolver63E549DD": Object {
+      "DependsOn": Array [
+        "GqlApiPostResolverCEF0036B",
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "DataSourceName": "PostResolver",
+        "FieldName": "allPosts",
+        "Kind": "UNIT",
+        "TypeName": "Query",
+      },
+      "Type": "AWS::AppSync::Resolver",
+    },
+    "GqlApiPostResolverQueryfindOnePostByResolver60EB5B03": Object {
+      "DependsOn": Array [
+        "GqlApiPostResolverCEF0036B",
+        "GqlApiSchema55BCA17B",
+      ],
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "DataSourceName": "PostResolver",
+        "FieldName": "findOnePostBy",
+        "Kind": "UNIT",
+        "TypeName": "Query",
+      },
+      "Type": "AWS::AppSync::Resolver",
+    },
+    "GqlApiPostResolverServiceRoleA926AB19": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "appsync.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "GqlApiPostResolverServiceRoleDefaultPolicy9CA016F8": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::ImportValue": "LambdaResolver:ExportsOutputFnGetAttPostFunction61046647Arn50D23A83",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "GqlApiPostResolverServiceRoleDefaultPolicy9CA016F8",
+        "Roles": Array [
+          Object {
+            "Ref": "GqlApiPostResolverServiceRoleA926AB19",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "GqlApiSchema55BCA17B": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Fn::GetAtt": Array [
+            "GqlApi4E487465",
+            "ApiId",
+          ],
+        },
+        "Definition": "type Post {
+    id: String!
+    title: String!
+    content: String!
+}
+
+input CreatePostInput {
+    title: String!
+    content: String!
+}
+
+input UpdatePostInput {
+    id: String!
+    title: String
+    content: String
+}
+
+type Query {
+    allPosts: [Post]
+    findOnePostBy(postId: String!): Post
+}
+
+type Mutation {
+    createPost(post: CreatePostInput): Post
+    updatePost(post: UpdatePostInput): Post
+    deletePost(postId: String!): String
+}
+
+type Subscription {
+    onCreatePost: Post
+        @aws_subscribe(mutations: [\\"createPost\\"])
+    onUpdatePost: Post
+        @aws_subscribe(mutations: [\\"updatePost\\"])
+    onDeletePost: String
+        @aws_subscribe(mutations: [\\"deletePost\\"])
+}
+",
+      },
+      "Type": "AWS::AppSync::GraphQLSchema",
+    },
+  },
+}
+`;

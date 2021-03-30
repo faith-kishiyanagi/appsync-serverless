@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stack snapshot 1`] = `
+Object {
+  "Parameters": Object {
+    "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeArtifactHash5F594A89": Object {
+      "Description": "Artifact hash for asset \\"91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234ee\\"",
+      "Type": "String",
+    },
+    "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeS3Bucket4994A5FA": Object {
+      "Description": "S3 bucket for asset \\"91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234ee\\"",
+      "Type": "String",
+    },
+    "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeS3VersionKey556059D3": Object {
+      "Description": "S3 key for asset version \\"91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234ee\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "PostFunction61046647": Object {
+      "DependsOn": Array [
+        "PostFunctionServiceRoleDefaultPolicy2A61B0F2",
+        "PostFunctionServiceRole1BB2A70F",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeS3Bucket4994A5FA",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeS3VersionKey556059D3",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters91625822e8bbab3db208ace6122c9a01d6f5e24184becf2bec9891d8ac9234eeS3VersionKey556059D3",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "CLUSTER_ARN": Object {
+              "Fn::Join": Array [
+                "",
+                Array [
+                  "arn:",
+                  Object {
+                    "Ref": "AWS::Partition",
+                  },
+                  ":rds:",
+                  Object {
+                    "Ref": "AWS::Region",
+                  },
+                  ":",
+                  Object {
+                    "Ref": "AWS::AccountId",
+                  },
+                  ":cluster:",
+                  Object {
+                    "Fn::ImportValue": "AuroraServerless:ExportsOutputRefBlogDbAuroraServerlessClusterB47832F535767072",
+                  },
+                ],
+              ],
+            },
+            "DB_NAME": "BlogDB",
+            "SECRET_ARN": Object {
+              "Fn::ImportValue": "AuroraServerless:ExportsOutputRefBlogDbAuroraServerlessClusterSecretAttachment26906F9D1FB8943F",
+            },
+          },
+        },
+        "Handler": "src/index.handler",
+        "MemorySize": 256,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "PostFunctionServiceRole1BB2A70F",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 30,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "PostFunctionServiceRole1BB2A70F": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "PostFunctionServiceRoleDefaultPolicy2A61B0F2": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "rds-data:BatchExecuteStatement",
+                "rds-data:BeginTransaction",
+                "rds-data:CommitTransaction",
+                "rds-data:ExecuteStatement",
+                "rds-data:RollbackTransaction",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            Object {
+              "Action": Array [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::ImportValue": "AuroraServerless:ExportsOutputRefBlogDbAuroraServerlessClusterSecretAttachment26906F9D1FB8943F",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "PostFunctionServiceRoleDefaultPolicy2A61B0F2",
+        "Roles": Array [
+          Object {
+            "Ref": "PostFunctionServiceRole1BB2A70F",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+}
+`;

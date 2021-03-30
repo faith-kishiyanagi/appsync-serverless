@@ -1,0 +1,254 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stack snapshot 1`] = `
+Object {
+  "Resources": Object {
+    "BlogAppVpcA4BA08F3": Object {
+      "Properties": Object {
+        "CidrBlock": "10.0.1.0/24",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "AuroraServerless/BlogAppVpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "BlogAppVpcIsolatedSubnet1RouteTable65DB2CE1": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "AuroraServerless/BlogAppVpc/IsolatedSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "BlogAppVpcA4BA08F3",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "BlogAppVpcIsolatedSubnet1RouteTableAssociation29680609": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "BlogAppVpcIsolatedSubnet1RouteTable65DB2CE1",
+        },
+        "SubnetId": Object {
+          "Ref": "BlogAppVpcIsolatedSubnet1Subnet6E8FF111",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "BlogAppVpcIsolatedSubnet1Subnet6E8FF111": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.0/26",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Isolated",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "AuroraServerless/BlogAppVpc/IsolatedSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "BlogAppVpcA4BA08F3",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "BlogAppVpcIsolatedSubnet2RouteTable1D112A1E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "AuroraServerless/BlogAppVpc/IsolatedSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "BlogAppVpcA4BA08F3",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "BlogAppVpcIsolatedSubnet2RouteTableAssociationFAD6D859": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "BlogAppVpcIsolatedSubnet2RouteTable1D112A1E",
+        },
+        "SubnetId": Object {
+          "Ref": "BlogAppVpcIsolatedSubnet2Subnet12CC2591",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "BlogAppVpcIsolatedSubnet2Subnet12CC2591": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.64/26",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Isolated",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "AuroraServerless/BlogAppVpc/IsolatedSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "BlogAppVpcA4BA08F3",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "BlogDbAuroraServerlessClusterB47832F5": Object {
+      "DeletionPolicy": "Snapshot",
+      "Properties": Object {
+        "DBClusterParameterGroupName": "default.aurora-mysql5.7",
+        "DBSubnetGroupName": Object {
+          "Ref": "BlogDbAuroraServerlessClusterSubnetsAB2728BD",
+        },
+        "DatabaseName": "BlogDB",
+        "Engine": "aurora-mysql",
+        "EngineMode": "serverless",
+        "MasterUserPassword": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "BlogDbAuroraServerlessClusterSecretCDD0164F",
+              },
+              ":SecretString:password::}}",
+            ],
+          ],
+        },
+        "MasterUsername": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{{resolve:secretsmanager:",
+              Object {
+                "Ref": "BlogDbAuroraServerlessClusterSecretCDD0164F",
+              },
+              ":SecretString:username::}}",
+            ],
+          ],
+        },
+        "ScalingConfiguration": Object {
+          "AutoPause": true,
+          "MaxCapacity": 2,
+          "MinCapacity": 1,
+          "SecondsUntilAutoPause": 300,
+        },
+        "StorageEncrypted": true,
+        "VpcSecurityGroupIds": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "BlogDbAuroraServerlessClusterSecurityGroup9C6808DE",
+              "GroupId",
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBCluster",
+      "UpdateReplacePolicy": "Snapshot",
+    },
+    "BlogDbAuroraServerlessClusterSecretAttachment26906F9D": Object {
+      "Properties": Object {
+        "SecretId": Object {
+          "Ref": "BlogDbAuroraServerlessClusterSecretCDD0164F",
+        },
+        "TargetId": Object {
+          "Ref": "BlogDbAuroraServerlessClusterB47832F5",
+        },
+        "TargetType": "AWS::RDS::DBCluster",
+      },
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+    },
+    "BlogDbAuroraServerlessClusterSecretCDD0164F": Object {
+      "Properties": Object {
+        "Description": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "Generated by the CDK for stack: ",
+              Object {
+                "Ref": "AWS::StackName",
+              },
+            ],
+          ],
+        },
+        "GenerateSecretString": Object {
+          "ExcludeCharacters": " %+~\`#$&*()|[]{}:;<>?!'/@\\"\\\\",
+          "GenerateStringKey": "password",
+          "PasswordLength": 30,
+          "SecretStringTemplate": "{\\"username\\":\\"admin\\"}",
+        },
+      },
+      "Type": "AWS::SecretsManager::Secret",
+    },
+    "BlogDbAuroraServerlessClusterSecurityGroup9C6808DE": Object {
+      "Properties": Object {
+        "GroupDescription": "RDS security group",
+        "SecurityGroupEgress": Array [
+          Object {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "BlogAppVpcA4BA08F3",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "BlogDbAuroraServerlessClusterSubnetsAB2728BD": Object {
+      "Properties": Object {
+        "DBSubnetGroupDescription": "Subnets for BlogDbAuroraServerlessCluster database",
+        "SubnetIds": Array [
+          Object {
+            "Ref": "BlogAppVpcIsolatedSubnet1Subnet6E8FF111",
+          },
+          Object {
+            "Ref": "BlogAppVpcIsolatedSubnet2Subnet12CC2591",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBSubnetGroup",
+    },
+  },
+}
+`;
