@@ -1,6 +1,8 @@
-# CDK API with GraphQL and Aurora Serverless MySQL
+# CDK with AppSync GraphQL and Aurora Serverless MySQL
 
-This CDK stack deploys a real-time GraphQL API built with AWS AppSync, Amazon Aurora Serverless PostgreSQL, and AWS Lambda.
+This CDK stack deploys a real-time GraphQL API built with AWS AppSync, Amazon Aurora Serverless MySQL, and AWS Lambda.
+
+![architecture](appsync-serverless.png)
 
 ## Getting started
 
@@ -10,19 +12,19 @@ This CDK stack deploys a real-time GraphQL API built with AWS AppSync, Amazon Au
    cd backend
    npm install
    ```
-3. Change into the `backend/functions/` directory and install the dependencies for the Lambda function package:
+3. Change into the `backend/functions/post` directory and install the dependencies for the Lambda function package:
    ```bash
    cd functions
    npm install
-   cd ..
    ```
 4. Run the build
    ```bash
+   cd ../..
    npm run build
    ```
 5. Deploy the stack
    ```bash
-   cdk deploy --O cdk-exports.json
+   npx cdk deploy --all --O cdk-exports.json
    ```
 6. Create the posts table
    Visit the [RDS console](https://console.aws.amazon.com/rds/home) and to sign in, you will use the ARN from the secret that was created by CDK.  
