@@ -21,7 +21,16 @@ export class AuroraServerlessStack extends cdk.Stack {
 
     this.blogDB = new rds.ServerlessCluster(this, 'BlogDbAuroraServerlessCluster', {
       engine: rds.DatabaseClusterEngine.AURORA_MYSQL,
-      parameterGroup: rds.ParameterGroup.fromParameterGroupName(this, 'BlogDbParameterGroup', 'default.aurora-mysql5.7'),
+      parameterGroup: new rds.ParameterGroup(this, 'BlogDbParameterGroup', {
+        engine: rds.DatabaseClusterEngine.AURORA_MYSQL,
+        parameters: {
+          character_set_client: 'utf8mb4',
+          character_set_connection: 'utf8mb4',
+          character_set_database: 'utf8mb4',
+          character_set_results: 'utf8mb4',
+          character_set_server: 'utf8mb4'
+        }
+      }),
       defaultDatabaseName: 'BlogDB',
       vpc: this.vpc,
       vpcSubnets: {subnetType: ec2.SubnetType.ISOLATED},
